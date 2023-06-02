@@ -1,0 +1,63 @@
+package Student;
+
+public class Master extends Student implements Manageable{
+ @Override
+    public double computeAverage() {
+        double sum = 0;
+        for (double s : score) {
+            sum += s;
+        }
+        average = sum / score.length;
+        return average;
+    }
+
+    @Override
+    public boolean getPass() {
+        status = computeAverage() >= 80 && getThesisLevel() <= 'C';
+        return status;
+    }
+
+    @Override
+    public String getDegree() {
+        return getPass() ? Constants.ISSUE_MASTER_DEGREE : Constants.UNSATISFACTORY_ISSUE_MASTER_DEGREE;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public char getThesisLevel() {
+        return thesisLevel;
+    }
+
+    public void setAverage(double average) {
+        this.average = average;
+    }
+
+    public void setThesisLevel(char theThesisLevel) {
+        switch (theThesisLevel) {
+            case 'A', 'B', 'C', 'D', 'E' -> {
+            }
+            default -> theThesisLevel = 'E';
+        }
+        this.thesisLevel = theThesisLevel;
+    }
+
+    @Override
+    public void printInfo(){
+        computeAverage();
+        getPass();
+        System.out.println("----------------------------");
+        System.out.println("Name: "+getName()+"\tGender: "+getGender());
+        System.out.println("Birthday: "+getBirthday().toString());
+        System.out.println("School: "+getSchool());
+        System.out.println("StudentID: "+getStuID());
+        System.out.println("Category: "+getCategory());
+        System.out.println("Average Score: " + computeAverage());
+        System.out.println("Issue Rank: "+ thesisLevel);
+        System.out.println("----------------------------");
+    }
+
+    protected double average;
+    protected char thesisLevel;
+}
